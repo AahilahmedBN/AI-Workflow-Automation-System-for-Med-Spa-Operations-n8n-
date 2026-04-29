@@ -1,0 +1,237 @@
+{
+  "chatbot_config": {
+    "name": "Medspa Lead Capture & Booking Bot",
+    "version": "1.0",
+    "trigger": "website_widget",
+    "primary_focus": "Botox consultations and bookings"
+  },
+  "conversation_flow": {
+    "greeting": {
+      "message": "Hi there! 👋 Welcome to [Medspa Name]. I'm here to help you book your consultation. Are you interested in learning more about our Botox treatments today?",
+      "options": ["Yes, tell me more", "I'm interested in other treatments", "I'd like to book directly"],
+      "next_step": {
+        "Yes, tell me more": "botox_intro",
+        "I'm interested in other treatments": "other_treatments",
+        "I'd like to book directly": "capture_name"
+      }
+    },
+    "botox_intro": {
+      "message": "Great choice! Our Botox treatments are perfect for smoothing fine lines and wrinkles. We use premium products and our licensed practitioners have years of experience.\n\nOur Botox consultations typically include:\n✨ Free skin assessment\n✨ Personalized treatment plan\n✨ Transparent pricing (typically $10-15/unit)\n✨ Same-day treatment available\n\nWould you like to schedule a complimentary consultation?",
+      "options": ["Yes, book my consultation", "Tell me more about pricing", "What areas can be treated?"],
+      "next_step": {
+        "Yes, book my consultation": "capture_name",
+        "Tell me more about pricing": "pricing_info",
+        "What areas can be treated?": "treatment_areas"
+      }
+    },
+    "pricing_info": {
+      "message": "Our Botox pricing is straightforward:\n💰 $10-15 per unit (depends on treatment area)\n💰 Most treatments use 20-40 units\n💰 First-time clients get 10% off\n\nDuring your free consultation, we'll assess exactly how many units you'll need and give you an exact quote. Ready to book?",
+      "options": ["Yes, let's book", "I have more questions"],
+      "next_step": {
+        "Yes, let's book": "capture_name",
+        "I have more questions": "additional_questions"
+      }
+    },
+    "treatment_areas": {
+      "message": "Botox works beautifully for:\n✨ Forehead lines\n✨ Crow's feet (around eyes)\n✨ Frown lines (between eyebrows)\n✨ Bunny lines (nose)\n✨ Neck bands\n\nResults typically last 3-4 months. Want to see what it can do for you? Let's get you scheduled!",
+      "options": ["Book my consultation", "I need to think about it"],
+      "next_step": {
+        "Book my consultation": "capture_name",
+        "I need to think about it": "nurture_sequence"
+      }
+    },
+    "other_treatments": {
+      "message": "We offer a full range of aesthetic treatments:\n✨ Dermal Fillers\n✨ Chemical Peels\n✨ Microneedling\n✨ Laser Treatments\n✨ And more!\n\nI'd love to get you scheduled for a consultation where we can discuss the best treatment plan for your goals. Sound good?",
+      "options": ["Yes, book consultation", "Tell me about fillers", "I'm just browsing"],
+      "next_step": {
+        "Yes, book consultation": "capture_name",
+        "Tell me about fillers": "filler_info",
+        "I'm just browsing": "nurture_sequence"
+      }
+    },
+    "filler_info": {
+      "message": "Our dermal fillers (Juvederm, Restylane) are perfect for:\n💋 Lip enhancement\n💋 Cheek volume\n💋 Nasolabial folds\n💋 Under-eye hollows\n\nResults are instant and last 6-18 months depending on the area. Ready to book your free consultation?",
+      "options": ["Yes, let's book", "Back to Botox"],
+      "next_step": {
+        "Yes, let's book": "capture_name",
+        "Back to Botox": "botox_intro"
+      }
+    },
+    "additional_questions": {
+      "message": "No problem! What would you like to know more about?\n\nCommon questions:\n❓ How long does Botox last?\n❓ Is there downtime?\n❓ Does it hurt?\n❓ When will I see results?\n\nOr feel free to type your specific question!",
+      "type": "open_response",
+      "next_step": "answer_and_book"
+    },
+    "answer_and_book": {
+      "message": "Great question! [Dynamic answer based on user input]\n\nThe best way to get all your questions answered is during your free consultation with one of our experts. They can assess your specific needs and create a custom plan. Ready to schedule?",
+      "options": ["Yes, book now", "I'll think about it"],
+      "next_step": {
+        "Yes, book now": "capture_name",
+        "I'll think about it": "nurture_sequence"
+      }
+    },
+    "capture_name": {
+      "message": "Perfect! Let's get you scheduled. 📅\n\nWhat's your first name?",
+      "input_type": "text",
+      "variable": "first_name",
+      "validation": "required",
+      "next_step": "capture_phone"
+    },
+    "capture_phone": {
+      "message": "Thanks, {first_name}! What's the best phone number to reach you?",
+      "input_type": "phone",
+      "variable": "phone_number",
+      "validation": "phone_format",
+      "next_step": "capture_email"
+    },
+    "capture_email": {
+      "message": "And your email address? (We'll send your confirmation here)",
+      "input_type": "email",
+      "variable": "email",
+      "validation": "email_format",
+      "next_step": "appointment_preference"
+    },
+    "appointment_preference": {
+      "message": "Almost done! When works best for you?\n\n🗓️ Choose your preferred time:",
+      "options": [
+        "Morning (9am-12pm)",
+        "Afternoon (12pm-3pm)",
+        "Evening (3pm-6pm)",
+        "Weekend",
+        "As soon as possible"
+      ],
+      "variable": "time_preference",
+      "next_step": "treatment_interest"
+    },
+    "treatment_interest": {
+      "message": "Last question - what treatment are you most interested in?",
+      "options": [
+        "Botox",
+        "Dermal Fillers",
+        "Both Botox & Fillers",
+        "Not sure - want recommendations",
+        "Other treatments"
+      ],
+      "variable": "treatment_type",
+      "next_step": "booking_confirmation"
+    },
+    "booking_confirmation": {
+      "message": "Perfect, {first_name}! 🎉\n\nI'm creating your booking now. You'll receive:\n✅ Calendar invite to your email\n✅ Text reminder 24 hours before\n✅ All the details you need for your visit\n\nYour consultation is completely FREE and there's no obligation. Our team will reach out within 2 hours to confirm your exact appointment time.\n\nSee you soon! 💙",
+      "actions": [
+        "send_to_google_sheets",
+        "create_calendly_booking",
+        "send_confirmation_email"
+      ],
+      "next_step": "end"
+    },
+    "nurture_sequence": {
+      "message": "No worries at all! Take your time. 😊\n\nCan I send you some helpful info about our treatments? Just drop your email and I'll send you:\n📧 Treatment guide\n📧 Before/after photos\n📧 Current promotions\n📧 Client testimonials",
+      "input_type": "email",
+      "variable": "nurture_email",
+      "optional": true,
+      "actions": ["add_to_nurture_sequence"],
+      "next_step": "end"
+    },
+    "end": {
+      "message": "Thanks for chatting! If you have any other questions, I'm here 24/7. 💬"
+    }
+  },
+  "integrations": {
+    "google_sheets": {
+      "enabled": true,
+      "sheet_name": "Medspa Leads",
+      "columns": [
+        "timestamp",
+        "first_name",
+        "phone_number",
+        "email",
+        "time_preference",
+        "treatment_type",
+        "conversation_path",
+        "lead_status"
+      ],
+      "trigger": "booking_confirmation"
+    },
+    "calendly": {
+      "enabled": true,
+      "booking_link": "https://calendly.com/aahilahmedbn/ai-system-adding-30k-month-to-medspa-live-demo",
+      "event_type": "Medspa Consultation",
+      "auto_schedule": true,
+      "parameters": {
+        "name": "{first_name}",
+        "email": "{email}",
+        "phone": "{phone_number}",
+        "notes": "Treatment Interest: {treatment_type} | Preferred Time: {time_preference}"
+      },
+      "trigger": "booking_confirmation"
+    },
+    "email_confirmation": {
+      "enabled": true,
+      "sender_email": "elevateaahil@gmail.com",
+      "sender_name": "[Your Medspa Name]",
+      "subject": "Your Medspa Consultation is Booked! 🎉",
+      "template": {
+        "greeting": "Hi {first_name},",
+        "body": "Thank you for booking your consultation with us!\n\nHere's what you can expect:\n✨ Free skin assessment\n✨ Personalized treatment recommendations\n✨ Transparent pricing discussion\n✨ All your questions answered\n\nTreatment Interest: {treatment_type}\nPreferred Time: {time_preference}\n\nOur team will reach out within 2 hours to confirm your exact appointment time. You'll also receive a calendar invite shortly.\n\nWhat to bring:\n📋 List of current medications/skincare products\n📋 Any questions you have\n📋 Your beautiful self!\n\nIf you need to reschedule or have questions before your appointment, just reply to this email or call us at [Phone Number].\n\nWe can't wait to meet you!",
+        "signature": "The [Medspa Name] Team\n[Phone Number]\n[Website]",
+        "footer": "P.S. Follow us on Instagram @[handle] for daily tips and special promotions!"
+      },
+      "trigger": "booking_confirmation"
+    },
+    "nurture_email_sequence": {
+      "enabled": true,
+      "trigger": "nurture_sequence",
+      "emails": [
+        {
+          "day": 0,
+          "subject": "Here's everything you need to know about [Treatment]",
+          "content": "Educational content + social proof"
+        },
+        {
+          "day": 2,
+          "subject": "See what our clients are saying...",
+          "content": "Testimonials + before/after photos"
+        },
+        {
+          "day": 5,
+          "subject": "⏰ Limited time offer inside",
+          "content": "Promotion + urgency + booking CTA"
+        },
+        {
+          "day": 10,
+          "subject": "Still thinking about [Treatment]?",
+          "content": "FAQ + final CTA + easy booking link"
+        }
+      ]
+    }
+  },
+  "webhook_config": {
+    "trigger_url": "[Your webhook URL]",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "payload_structure": {
+      "event": "chat_completed",
+      "lead_data": {
+        "first_name": "{first_name}",
+        "phone_number": "{phone_number}",
+        "email": "{email}",
+        "time_preference": "{time_preference}",
+        "treatment_type": "{treatment_type}",
+        "timestamp": "{timestamp}",
+        "conversation_path": "{conversation_path}"
+      }
+    }
+  },
+  "analytics_tracking": {
+    "metrics": [
+      "total_conversations",
+      "booking_conversion_rate",
+      "drop_off_points",
+      "most_selected_treatments",
+      "preferred_time_slots",
+      "nurture_email_open_rates"
+    ]
+  }
+}
